@@ -1,0 +1,32 @@
+version: 1
+default_environment: dev
+project_id: 2733feae-6ec4-49e4-857a-33d3de3f12c9
+environments:
+- name: dev
+- name: staging
+- name: prod
+plugins:
+  extractors:
+  - name: tap-postgres
+    variant: meltanolabs
+    pip_url: meltanolabs-tap-postgres
+    config:
+      database: postgres
+      filter_schemas:
+      - public
+      host: aws-0-us-east-2.pooler.supabase.com
+      port: 5432
+      user: postgres.ufkutyufdohbogiqgjel
+  loaders:
+  - name: target-bigquery
+    variant: z3z1ma
+    pip_url: git+https://github.com/z3z1ma/target-bigquery.git
+    config:
+      batch_size: 104857600
+      credentials_path: /Users/aiml/.dbt/sctp-dsai-ds2-7eb2a1537443.json
+      dataset: resale
+      denormalized: true
+      flattening_enabled: true
+      flattening_max_depth: 1
+      method: batch_job
+      project: sctp-dsai-ds2
